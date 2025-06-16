@@ -7,4 +7,6 @@ config.leader = { key = "`", mods = "ALT", timeout_milliseconds = 1000 }
 
 config.keys = keys
 
+config.color_scheme = "Catppuccin Mocha"
+config.tab_bar_at_bottom = true
 return config
