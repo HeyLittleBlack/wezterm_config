@@ -51,8 +51,10 @@ function M.Keys()
 		),
 		_ctrl_shift_kb("<", act.MoveTabRelative(-1)),
 		_ctrl_shift_kb(">", act.MoveTabRelative(1)),
-		_leader_kb("j", act.ActivatePaneDirection("Prev")),
-		_leader_kb("k", act.ActivatePaneDirection("Next")),
+		_leader_kb("j", act.ActivatePaneDirection("Down")),
+		_leader_kb("k", act.ActivatePaneDirection("Up")),
+		_leader_kb("h", act.ActivatePaneDirection("Left")),
+		_leader_kb("l", act.ActivatePaneDirection("Right")),
 	}
 	return keys
 end
