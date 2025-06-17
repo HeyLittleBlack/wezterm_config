@@ -10,4 +10,5 @@ config.keys = keys
 config.color_scheme = "Catppuccin Mocha"
 config.tab_bar_at_bottom = true
 config.default_cursor_style = "SteadyBar"
+config.enable_scroll_bar = true
 return config
