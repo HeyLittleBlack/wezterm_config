@@ -1,5 +1,6 @@
 local wezterm = require("wezterm")
-local keys = require("key_binding").Keys()
+local key_binding = require("key_binding")
+local keys = key_binding.Keys()
 local mouse_bindings = require("mouse_binding").MouseBindings()
 local config = wezterm.config_builder()
 config.font_size = 16
@@ -34,4 +35,15 @@ config.enable_scroll_bar = true
 -- 		},
 -- 	},
 -- }
+--
+-- https://github.com/wez/wezterm/discussions/4728
+local is_darwin = wezterm.target_triple:find("darwin") ~= nil
+local is_linux = wezterm.target_triple:find("linux") ~= nil
+if is_darwin then
+	local macos_keys = key_binding.MacOSKeys()
+	for i = 1, #macos_keys do
+		config.keys[#config.keys + 1] = macos_keys[i]
+	end
+end
+
 return config

@@ -59,4 +59,12 @@ function M.Keys()
 	return keys
 end
 
+function M.MacOSKeys()
+	return {
+		{ key = "LeftArrow", mods = "OPT", action = act.SendString("\x1bb") },
+		-- Make Option-Right equivalent to Alt-f; forward-word
+		{ key = "RightArrow", mods = "OPT", action = act.SendString("\x1bf") },
+	}
+end
+
 return M
