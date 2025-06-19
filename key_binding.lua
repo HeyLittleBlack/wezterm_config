@@ -26,6 +26,14 @@ local function _ctrl_shift_alt_kb(key, action)
 	}
 end
 
+local function _ctrl_kb(key, action)
+	return {
+		key = key,
+		mods = "CTRL",
+		action = action,
+	}
+end
+
 function M.Keys()
 	local keys = {
 		_leader_kb("\\", act.SplitHorizontal),
@@ -56,6 +64,9 @@ function M.Keys()
 		_leader_kb("h", act.ActivatePaneDirection("Left")),
 		_leader_kb("l", act.ActivatePaneDirection("Right")),
 	}
+	for i = 1, 9 do
+		table.insert(keys, _ctrl_kb(tostring(i), act.ActivateTab(i - 1)))
+	end
 	return keys
 end
 
