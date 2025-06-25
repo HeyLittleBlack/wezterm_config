@@ -34,6 +34,17 @@ local function _ctrl_kb(key, action)
 	}
 end
 
+local function _send_key(key, mods, new_key, new_mods)
+	return {
+		key = key,
+		mods = mods,
+		action = act.SendKey({
+			key = new_key,
+			mods = new_mods,
+		}),
+	}
+end
+
 function M.Keys()
 	local keys = {
 		_leader_kb("\\", act.SplitHorizontal),
@@ -63,6 +74,7 @@ function M.Keys()
 		_leader_kb("k", act.ActivatePaneDirection("Up")),
 		_leader_kb("h", act.ActivatePaneDirection("Left")),
 		_leader_kb("l", act.ActivatePaneDirection("Right")),
+		_send_key("k", "OPT", "RightArrow", ""),
 	}
 	for i = 1, 9 do
 		table.insert(keys, _ctrl_kb(tostring(i), act.ActivateTab(i - 1)))
