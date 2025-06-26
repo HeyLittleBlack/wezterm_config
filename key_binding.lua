@@ -75,6 +75,12 @@ function M.Keys()
 		_leader_kb("h", act.ActivatePaneDirection("Left")),
 		_leader_kb("l", act.ActivatePaneDirection("Right")),
 		_send_key("k", "OPT", "RightArrow", ""),
+		{ key = "l", mods = "ALT", action = wezterm.action.ShowLauncher },
+		{
+			key = "9",
+			mods = "ALT",
+			action = wezterm.action.ShowLauncherArgs({ flags = "TABS|WORKSPACES|LAUNCH_MENU_ITEMS" }),
+		},
 	}
 	for i = 1, 9 do
 		table.insert(keys, _ctrl_kb(tostring(i), act.ActivateTab(i - 1)))
