@@ -1,6 +1,20 @@
 local wezterm = require("wezterm")
 local act = wezterm.action
 local M = {}
+local work_ws = {
+	{
+		tabname = "configwez",
+		cwd = wezterm.config_dir,
+	},
+	{
+		tabname = "notes",
+		cwd = "/mnt/work/Notes/MyNotes/",
+	},
+	{
+		tabname = "carlaue5",
+		cwd = "/mnt/work/CarlaOfficial/carla/",
+	},
+}
 
 local function _leader_kb(key, action)
 	return {
@@ -43,6 +57,16 @@ local function _send_key(key, mods, new_key, new_mods)
 			mods = new_mods,
 		}),
 	}
+end
+
+function M.work_workspace(cmd)
+	local tab, pane, window = wezterm.mux.spawn_window({ cwd = work_ws[1].cwd })
+	tab:set_title(work_ws[1].tabname)
+	window:set_workspace("work")
+	for i = 2, #work_ws do
+		local tmp_tab, tmp_pane, tmp_window = window:spawn_tab({ cwd = work_ws[i].cwd })
+		tmp_tab:set_title(work_ws[i].tabname)
+	end
 end
 
 function M.Keys()
