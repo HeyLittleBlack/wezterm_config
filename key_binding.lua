@@ -1,5 +1,7 @@
 local wezterm = require("wezterm")
 local act = wezterm.action
+local ce = require("custom_event")
+
 local M = {}
 local work_ws = {
 	{
@@ -99,7 +101,7 @@ function M.Keys()
 		_leader_kb("h", act.ActivatePaneDirection("Left")),
 		_leader_kb("l", act.ActivatePaneDirection("Right")),
 		_send_key("k", "OPT", "RightArrow", ""),
-		{ key = "l", mods = "ALT", action = wezterm.action.ShowLauncher },
+		{ key = "l", mods = "ALT", action = ce.bind() },
 		{
 			key = "9",
 			mods = "ALT",
