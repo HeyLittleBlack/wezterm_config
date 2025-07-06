@@ -50,4 +50,8 @@ if is_linux then
 	wezterm.on("gui-startup", key_binding.work_workspace)
 end
 
+if is_darwin then
+	wezterm.on("gui-startup", key_binding.work_workspace)
+end
+
 return config

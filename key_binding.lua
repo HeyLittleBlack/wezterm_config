@@ -3,20 +3,20 @@ local act = wezterm.action
 local ce = require("custom_event")
 
 local M = {}
-local work_ws = {
-	{
-		tabname = "configwez",
-		cwd = wezterm.config_dir,
-	},
-	{
-		tabname = "notes",
-		cwd = "/mnt/work/Notes/MyNotes/",
-	},
-	{
-		tabname = "carlaue5",
-		cwd = "/mnt/work/CarlaOfficial/carla/",
-	},
-}
+-- local work_ws = {
+-- 	{
+-- 		tabname = "configwez",
+-- 		cwd = wezterm.config_dir,
+-- 	},
+-- 	{
+-- 		tabname = "notes",
+-- 		cwd = "/mnt/work/Notes/MyNotes/",
+-- 	},
+-- 	{
+-- 		tabname = "carlaue5",
+-- 		cwd = "/mnt/work/CarlaOfficial/carla/",
+-- 	},
+-- }
 
 local function _leader_kb(key, action)
 	return {
@@ -62,6 +62,53 @@ local function _send_key(key, mods, new_key, new_mods)
 end
 
 function M.work_workspace(cmd)
+	local work_ws = nil
+
+	local is_darwin = wezterm.target_triple:find("darwin") ~= nil
+	local is_linux = wezterm.target_triple:find("linux") ~= nil
+
+	if is_linux then
+		-- work_ws = ce.layouts[ce.choices[1]]
+		work_ws = {
+			{
+				tabname = "configwez",
+				cwd = wezterm.config_dir,
+			},
+			{
+				tabname = "notes",
+				cwd = "/mnt/work/Notes/MyNotes/",
+			},
+			{
+				tabname = "carlaue5",
+				cwd = "/mnt/work/CarlaOfficial/carla/",
+			},
+		}
+	end
+
+	if is_darwin then
+		-- work_ws = ce.layouts[ce.choices[2]]
+		work_ws = {
+			{
+				tabname = "configwez",
+				cwd = wezterm.config_dir,
+			},
+			{
+				tabname = "notes",
+				cwd = "/Users/homantix/self/notes/",
+			},
+			{
+				tabname = "coding",
+				cwd = "/Users/homantix/self/codes/",
+			},
+		}
+	end
+
+	if work_ws == nil then
+		return
+	end
+
+	print(work_ws)
+
 	local tab, pane, window = wezterm.mux.spawn_window({ cwd = work_ws[1].cwd })
 	tab:set_title(work_ws[1].tabname)
 	window:set_workspace("work")

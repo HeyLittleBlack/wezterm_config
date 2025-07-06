@@ -17,6 +17,7 @@ local layouts = {}
 layouts[choices[1].label] = {
 	{
 		tabname = "notes",
+		cwd = wezterm.config_dir,
 	},
 	{
 		tabname = "configwez",
@@ -76,4 +77,6 @@ function M.bind()
 	end)
 end
 
+M.choices = choices
+M.layouts = layouts
 return M
