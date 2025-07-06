@@ -3,20 +3,6 @@ local act = wezterm.action
 local ce = require("custom_event")
 
 local M = {}
--- local work_ws = {
--- 	{
--- 		tabname = "configwez",
--- 		cwd = wezterm.config_dir,
--- 	},
--- 	{
--- 		tabname = "notes",
--- 		cwd = "/mnt/work/Notes/MyNotes/",
--- 	},
--- 	{
--- 		tabname = "carlaue5",
--- 		cwd = "/mnt/work/CarlaOfficial/carla/",
--- 	},
--- }
 
 local function _leader_kb(key, action)
 	return {
@@ -68,39 +54,11 @@ function M.work_workspace(cmd)
 	local is_linux = wezterm.target_triple:find("linux") ~= nil
 
 	if is_linux then
-		-- work_ws = ce.layouts[ce.choices[1]]
-		work_ws = {
-			{
-				tabname = "configwez",
-				cwd = wezterm.config_dir,
-			},
-			{
-				tabname = "notes",
-				cwd = "/mnt/work/Notes/MyNotes/",
-			},
-			{
-				tabname = "carlaue5",
-				cwd = "/mnt/work/CarlaOfficial/carla/",
-			},
-		}
+		work_ws = ce.layouts[ce.choices[2].label]
 	end
 
 	if is_darwin then
-		-- work_ws = ce.layouts[ce.choices[2]]
-		work_ws = {
-			{
-				tabname = "configwez",
-				cwd = wezterm.config_dir,
-			},
-			{
-				tabname = "notes",
-				cwd = "/Users/homantix/self/notes/",
-			},
-			{
-				tabname = "coding",
-				cwd = "/Users/homantix/self/codes/",
-			},
-		}
+		work_ws = ce.layouts[ce.choices[2].label]
 	end
 
 	if work_ws == nil then
