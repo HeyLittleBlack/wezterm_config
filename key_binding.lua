@@ -58,7 +58,7 @@ function M.work_workspace(cmd)
 	end
 
 	if is_darwin then
-		work_ws = ce.layouts[ce.choices[2].label]
+		work_ws = ce.layouts[ce.choices[1].label]
 	end
 
 	if work_ws == nil then
