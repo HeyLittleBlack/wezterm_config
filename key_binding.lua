@@ -107,6 +107,7 @@ function M.Keys()
 		_leader_kb("l", act.ActivatePaneDirection("Right")),
 		_send_key("k", "OPT", "RightArrow", ""),
 		_send_key("l", "OPT", "RightArrow", ""),
+		_send_key("j", "OPT", "UpArrow", ""),
 		-- { key = "l", mods = "ALT", action = ce.bind() },
 		{
 			key = "9",

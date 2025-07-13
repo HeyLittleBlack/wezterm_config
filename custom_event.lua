@@ -16,12 +16,12 @@ local layouts = {}
 
 layouts[choices[1].label] = {
 	{
-		tabname = "notes",
+		tabname = "configwez",
 		cwd = wezterm.config_dir,
 	},
 	{
-		tabname = "configwez",
-		cwd = "/Users/homantix/.config/wezterm/",
+		tabname = "notes",
+		cwd = "/Users/homantix/self/notes",
 	},
 	{
 		tabname = "coding",

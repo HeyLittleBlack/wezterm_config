@@ -14,6 +14,7 @@ config.mouse_bindings = mouse_bindings
 -- config.color_scheme = "Dracula (Gogh)"
 -- config.color_scheme = "Catppuccin Latte"
 config.color_scheme = "Sakura"
+config.color_scheme = "Google Dark (Gogh)"
 config.tab_bar_at_bottom = true
 config.default_cursor_style = "SteadyBar"
 config.enable_scroll_bar = true
