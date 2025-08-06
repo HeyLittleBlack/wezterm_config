@@ -14,6 +14,8 @@ config.mouse_bindings = mouse_bindings
 -- config.color_scheme = "Dracula (Gogh)"
 -- config.color_scheme = "Catppuccin Latte"
 config.color_scheme = "Sakura"
+config.color_scheme = "Google Dark (Gogh)"
+-- config.color_scheme = "SynthwaveAlpha"
 config.tab_bar_at_bottom = true
 config.default_cursor_style = "SteadyBar"
 config.enable_scroll_bar = true
@@ -49,6 +51,13 @@ end
 
 if is_windows then
 	config.default_domain = "WSL:Ubuntu-20.04"
+end
+if is_linux then
+	wezterm.on("gui-startup", key_binding.work_workspace)
+end
+
+if is_darwin then
+	wezterm.on("gui-startup", key_binding.work_workspace)
 end
 
 return config
