@@ -126,6 +126,7 @@ function M.MacOSKeys()
 		{ key = "LeftArrow", mods = "OPT", action = act.SendString("\x1bb") },
 		-- Make Option-Right equivalent to Alt-f; forward-word
 		{ key = "RightArrow", mods = "OPT", action = act.SendString("\x1bf") },
+		_send_key("s", "CMD", "s", "CTRL"),
 	}
 end
 
