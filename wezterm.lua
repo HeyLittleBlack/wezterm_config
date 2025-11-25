@@ -41,6 +41,7 @@ config.enable_scroll_bar = true
 -- https://github.com/wez/wezterm/discussions/4728
 local is_darwin = wezterm.target_triple:find("darwin") ~= nil
 local is_linux = wezterm.target_triple:find("linux") ~= nil
+local is_windows = wezterm.target_triple:find("windows") ~= nil
 if is_darwin then
 	local macos_keys = key_binding.MacOSKeys()
 	for i = 1, #macos_keys do
@@ -48,6 +49,9 @@ if is_darwin then
 	end
 end
 
+if is_windows then
+	config.default_domain = "WSL:Ubuntu-20.04"
+end
 if is_linux then
 	wezterm.on("gui-startup", key_binding.work_workspace)
 end
