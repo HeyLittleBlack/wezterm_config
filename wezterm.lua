@@ -4,7 +4,7 @@ local keys = key_binding.Keys()
 local mouse_bindings = require("mouse_binding").MouseBindings()
 local config = wezterm.config_builder()
 config.font_size = 16
-
+config.font = wezterm.font("Maple Mono Normal NF CN")
 config.leader = { key = "`", mods = "ALT", timeout_milliseconds = 1000 }
 
 config.keys = keys
