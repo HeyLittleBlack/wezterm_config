@@ -115,7 +115,7 @@ function M.Keys()
 			action = wezterm.action.ShowLauncherArgs({ flags = "TABS|WORKSPACES|LAUNCH_MENU_ITEMS" }),
 		},
 	}
-	for i = 1, 9 do
+	for i = 0, 9 do
 		table.insert(keys, _ctrl_kb(tostring(i), act.ActivateTab(i - 1)))
 	end
 	return keys
