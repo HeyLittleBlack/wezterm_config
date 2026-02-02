@@ -101,6 +101,7 @@ function M.Keys()
 		),
 		_ctrl_shift_kb("<", act.MoveTabRelative(-1)),
 		_ctrl_shift_kb(">", act.MoveTabRelative(1)),
+		_ctrl_shift_kb("o", act.ActivateLastTab),
 		_leader_kb("j", act.ActivatePaneDirection("Down")),
 		_leader_kb("k", act.ActivatePaneDirection("Up")),
 		_leader_kb("h", act.ActivatePaneDirection("Left")),
@@ -113,6 +114,11 @@ function M.Keys()
 			key = "9",
 			mods = "ALT",
 			action = wezterm.action.ShowLauncherArgs({ flags = "TABS|WORKSPACES|LAUNCH_MENU_ITEMS" }),
+		},
+		{
+			key = "0",
+			mods = "ALT",
+			action = wezterm.action.ShowLauncherArgs({ flags = "TABS" }),
 		},
 	}
 	for i = 0, 9 do
