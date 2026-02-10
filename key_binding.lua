@@ -123,43 +123,45 @@ function M.Keys()
 		{
 			key = "0",
 			mods = "ALT",
-			action = act.InputSelector({
-				title = "Search Tabs by Name or Path",
-				fuzzy = true,
-				choices = (function()
-					local choices = {}
-					-- 遍历所有活动的标签页
-					for _, window in ipairs(wezterm.mux.all_windows()) do
-						for _, tab in ipairs(window:tabs()) do
-							local active_pane = tab:active_pane()
-							local title = tab:get_title()
-							-- 获取当前路径 (OSC 7 序列支持)
-							local cwd = active_pane:get_current_working_dir()
-							local path_str = ""
+			action = wezterm.action_callback(function(window, pane)
+				-- 这里的 window 和 pane 是当前的上下文
+				local choices = {}
+				for _, win in ipairs(wezterm.mux.all_windows()) do
+					for _, tab in ipairs(win:tabs()) do
+						local active_pane = tab:active_pane()
+						local title = tab:get_title()
+						-- 如果没有显式设置标题，尝试获取进程名
+						if title == nil or title == "" then
+							title = active_pane:get_title()
+						end
 
-							if cwd then
-								-- 转换路径格式（去除 file:// 前缀）
-								path_str = cwd.file_path
+						local cwd = active_pane:get_current_working_dir()
+						local path_str = cwd and cwd.file_path or "Unknown"
+
+						table.insert(choices, {
+							id = tostring(tab:tab_id()),
+							label = string.format("Tab: %s  |  Path: %s", title, path_str),
+						})
+					end
+				end
+
+				window:perform_action(
+					wezterm.action.InputSelector({
+						title = "Search Tabs by Name or Path",
+						choices = choices, -- 此时 choices 是实时生成的
+						fuzzy = true,
+						action = wezterm.action_callback(function(inner_window, inner_pane, id, label)
+							if id then
+								local tab = wezterm.mux.get_tab(id)
+								if tab then
+									tab:activate()
+								end
 							end
-
-							table.insert(choices, {
-								id = tostring(tab:tab_id()),
-								-- 这里的 label 是搜索的关键，我们将标题和路径拼接在一起
-								label = string.format("Tab: %s  |  Path: %s", title, path_str),
-							})
-						end
-					end
-					return choices
-				end)(),
-				action = wezterm.action_callback(function(window, pane, id, label)
-					if id then
-						local tab = wezterm.mux.get_tab(id)
-						if tab then
-							tab:activate()
-						end
-					end
-				end),
-			}),
+						end),
+					}),
+					pane
+				)
+			end),
 		},
 		{ key = "UpArrow", mods = "SHIFT", action = act.ScrollToPrompt(-1) },
 		{ key = "DownArrow", mods = "SHIFT", action = act.ScrollToPrompt(1) },
