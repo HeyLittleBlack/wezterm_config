@@ -115,11 +115,54 @@ function M.Keys()
 			mods = "ALT",
 			action = wezterm.action.ShowLauncherArgs({ flags = "TABS|WORKSPACES|LAUNCH_MENU_ITEMS" }),
 		},
+		-- {
+		-- 	key = "0",
+		-- 	mods = "ALT",
+		-- 	action = wezterm.action.ShowLauncherArgs({ flags = "FUZZY|TABS" }),
+		-- },
 		{
 			key = "0",
 			mods = "ALT",
-			action = wezterm.action.ShowLauncherArgs({ flags = "TABS" }),
+			action = act.InputSelector({
+				title = "Search Tabs by Name or Path",
+				fuzzy = true,
+				choices = (function()
+					local choices = {}
+					-- 遍历所有活动的标签页
+					for _, window in ipairs(wezterm.mux.all_windows()) do
+						for _, tab in ipairs(window:tabs()) do
+							local active_pane = tab:active_pane()
+							local title = tab:get_title()
+							-- 获取当前路径 (OSC 7 序列支持)
+							local cwd = active_pane:get_current_working_dir()
+							local path_str = ""
+
+							if cwd then
+								-- 转换路径格式（去除 file:// 前缀）
+								path_str = cwd.file_path
+							end
+
+							table.insert(choices, {
+								id = tostring(tab:tab_id()),
+								-- 这里的 label 是搜索的关键，我们将标题和路径拼接在一起
+								label = string.format("Tab: %s  |  Path: %s", title, path_str),
+							})
+						end
+					end
+					return choices
+				end)(),
+				action = wezterm.action_callback(function(window, pane, id, label)
+					if id then
+						local tab = wezterm.mux.get_tab(id)
+						if tab then
+							tab:activate()
+						end
+					end
+				end),
+			}),
 		},
+		{ key = "UpArrow", mods = "SHIFT", action = act.ScrollToPrompt(-1) },
+		{ key = "DownArrow", mods = "SHIFT", action = act.ScrollToPrompt(1) },
 	}
 	for i = 0, 9 do
 		table.insert(keys, _ctrl_kb(tostring(i), act.ActivateTab(i - 1)))

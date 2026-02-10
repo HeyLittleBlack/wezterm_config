@@ -17,6 +17,11 @@ function M.MouseBindings()
 				end
 			end),
 		},
+		{
+			event = { Down = { streak = 2, button = "Left" } },
+			action = wezterm.action.SelectTextAtMouseCursor("SemanticZone"),
+			mods = "CTRL",
+		},
 	}
 	return mouse_bindings
 end
