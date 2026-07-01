@@ -77,6 +77,25 @@ function M.bind()
 	end)
 end
 
+function M.BroadcastCommand()
+	return wezterm.action_callback(function(window, pane)
+		window:perform_action(
+			wezterm.action.PromptInputLine({
+				description = "Broadcast command to all panes:",
+				action = wezterm.action_callback(function(win, p, line)
+					if line and line ~= "" then
+						local active_tab = win:active_tab()
+						for _, target_pane in ipairs(active_tab:panes()) do
+							target_pane:send_text(line .. "\r")
+						end
+					end
+				end),
+			}),
+			pane
+		)
+	end)
+end
+
 M.choices = choices
 M.layouts = layouts
 return M

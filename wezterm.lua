@@ -60,4 +60,13 @@ if is_darwin then
 	wezterm.on("gui-startup", key_binding.work_workspace)
 end
 
+wezterm.on("augment-command-palette", function(window, pane)
+	return {
+		{
+			brief = "Broadcast command to all panes",
+			action = require("custom_event").BroadcastCommand(),
+		},
+	}
+end)
+
 return config
