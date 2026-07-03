@@ -102,6 +102,7 @@ function M.Keys()
 		_ctrl_shift_kb("<", act.MoveTabRelative(-1)),
 		_ctrl_shift_kb(">", act.MoveTabRelative(1)),
 		_ctrl_shift_kb("o", act.ActivateLastTab),
+		_ctrl_shift_kb("b", ce.BroadcastCommand()),
 		_leader_kb("j", act.ActivatePaneDirection("Down")),
 		_leader_kb("k", act.ActivatePaneDirection("Up")),
 		_leader_kb("h", act.ActivatePaneDirection("Left")),
