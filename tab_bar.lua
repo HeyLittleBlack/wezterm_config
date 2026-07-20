@@ -21,36 +21,28 @@ function M.apply(config)
 		new_tab_hover = { bg_color = colors.hover, fg_color = colors.text },
 	}
 
-	wezterm.on("format-tab-title", function(tab, tabs, _, _, _, max_width)
-		local background = tab.is_active and colors.active or colors.inactive
+	wezterm.on("format-tab-title", function(tab, tabs, _, _, hover, max_width)
+		local background = tab.is_active and colors.active or (hover and colors.hover or colors.inactive)
 		local title = tab.tab_title
 		if title == "" then
-			title = tab.active_pane.title:gsub("[/\\]+$", ""):match("([^/\\]+)$") or tab.active_pane.title
+			local cwd = tab.active_pane.current_working_dir
+			local path = cwd and cwd.file_path or tab.active_pane.title
+			title = path:gsub("[/\\]+$", ""):match("([^/\\]+)$") or path
 		end
 		title = string.format("%d: %s", tab.tab_index + 1, title)
-		local edge_width = (tab.tab_index > 0 and 1 or 0) + (tab.tab_index == #tabs - 1 and 1 or 0)
-		title = wezterm.truncate_right(title, max_width - edge_width - 2)
+		title = wezterm.truncate_right(title, max_width - 3)
 
-		local title_format = {}
-		if tab.tab_index > 0 then
-			local previous = tabs[tab.tab_index]
-			local previous_background = previous.is_active and colors.active or colors.inactive
-			title_format[#title_format + 1] = { Background = { Color = background } }
-			title_format[#title_format + 1] = { Foreground = { Color = previous_background } }
-			title_format[#title_format + 1] = { Text = right_arrow }
-		end
+		local next_tab = tabs[tab.tab_index + 2]
+		local next_background = next_tab and (next_tab.is_active and colors.active or colors.inactive) or colors.bar
 
-		title_format[#title_format + 1] = { Background = { Color = background } }
-		title_format[#title_format + 1] = { Foreground = { Color = colors.text } }
-		title_format[#title_format + 1] = { Text = " " .. title .. " " }
-
-		if tab.tab_index == #tabs - 1 then
-			title_format[#title_format + 1] = { Background = { Color = colors.bar } }
-			title_format[#title_format + 1] = { Foreground = { Color = background } }
-			title_format[#title_format + 1] = { Text = right_arrow }
-		end
-
-		return title_format
+		return {
+			{ Background = { Color = background } },
+			{ Foreground = { Color = colors.text } },
+			{ Text = " " .. title .. " " },
+			{ Background = { Color = next_background } },
+			{ Foreground = { Color = background } },
+			{ Text = right_arrow },
+		}
 	end)
 end
 
